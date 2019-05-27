@@ -1,14 +1,19 @@
 package com.acme.banking.dbo.ooad.domain;
 
-import com.acme.banking.dbo.legacy.domain.AccountType;
+import org.springframework.stereotype.Component;
 
 /**
  * Encapsulated state + behavior
  * POJO
  */
+@Component
 public class SavingAccount implements Account {
     private long id;
     private double amount;
+
+    public SavingAccount() {
+
+    }
 
     public SavingAccount(long id, double amount) {
         this.id = id;
@@ -16,11 +21,11 @@ public class SavingAccount implements Account {
     }
 
     //Contract
+
     @Override
     public long getId() {
         return id;
     }
-
     @Override
     public double getAmount() {
         return amount;
@@ -42,5 +47,16 @@ public class SavingAccount implements Account {
 
     protected boolean validate(double amount) {
         return amount > this.amount;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        SavingAccount that = (SavingAccount) o;
+
+        if (id != that.id) return false;
+        return Double.compare(that.amount, amount) == 0;
     }
 }
